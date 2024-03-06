@@ -13,3 +13,10 @@ data "aws_ami" "ubuntu" {
 
   owners = ["099720109477"]
 }
+
+data "aws_security_group" "selected" {
+  filter {
+    name   = "tag:Name"
+    values = ["ssh-http-https"]
+  }
+}

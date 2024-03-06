@@ -13,11 +13,15 @@ provider "aws" {
   region = "eu-west-2"
 }
 
+locals {
+    key_pair = "Tkalenko_key"
+}
+
 resource "aws_instance" "example" {
   ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t2.micro"
-  key_name               = "Tkalenko_key"
-  vpc_security_group_ids = ["sg-01142ec3c87ec19dd"]
+  instance_type          = var.instance_type
+  key_name               = local.key_pair
+  vpc_security_group_ids = [data.aws_security_group.selected.id]
   tags = {
     Name = "ExampleAppServerInstance"
   }
